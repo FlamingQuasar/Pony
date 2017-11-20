@@ -63,7 +63,8 @@ import pony.pixi.ui.ZeroPlace;
 import pony.pixi.ui.slices.SliceTools;
 import pony.time.DeltaTime;
 import pony.time.Time;
-
+import pony.pixi.PixiHtmlVideoBase;
+	
 using pony.text.TextTools;
 using pony.pixi.PixiExtends;
 
@@ -95,7 +96,8 @@ using pony.pixi.PixiExtends;
 	fastclip: pixi.core.sprites.Sprite,
 	slider: pony.pixi.ui.StepSlider,
 	slice: pony.pixi.ui.slices.SliceSprite,
-	particles: pony.pixi.ui.Particles
+	particles: pony.pixi.ui.Particles,
+	    video: pony.pixi.PixiHtmlVideoBase
 }))
 #end
 class PixiXmlUi extends Sprite implements HasAbstract {
@@ -298,6 +300,23 @@ class PixiXmlUi extends Sprite implements HasAbstract {
 					var cfg = src.shift();
 					new Particles(cfg, src);
 				}
+			case 'video':
+				var g = new Graphics();
+				g.lineStyle();
+				if(attrs.color != null){
+					var color = UColor.fromString(attrs.color);
+					g.beginFill(color.rgb, color.invertAlpha.af);
+				}
+				var _w = (attrs.w != null)? attrs.w : 640;
+				var _h = (attrs.h != null)? attrs.h : 480;
+				if (attrs.round == null)
+					g.drawRect(0, 0, parseAndScale(_w), parseAndScale(_h));
+				else
+					g.drawRoundedRect(0, 0, parseAndScale(_w), parseAndScale(_h), parseAndScaleInt(attrs.round));
+				g.endFill();
+				var _app = if(attrs.app)? attrs.app : null;
+				var _vo = if(attrs.options)? attrs.options : null;
+				new PixiHtmlVideoBase(g, _app, _vo);
 			case _:
 				customUIElement(name, attrs, content);
 		}
