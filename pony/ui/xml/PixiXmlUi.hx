@@ -314,9 +314,13 @@ class PixiXmlUi extends Sprite implements HasAbstract {
 				else
 					g.drawRoundedRect(0, 0, parseAndScale(_w), parseAndScale(_h), parseAndScaleInt(attrs.round));
 				g.endFill();
-				var _app = if(attrs.app)? attrs.app : null;
-				var _vo = if(attrs.options)? attrs.options : null;
-				new PixiHtmlVideoBase(g, _app, _vo);
+				var _opts = if(attrs.options)? {
+				    ?bufferingTreshhold: attrs.options.bufferingTreshhold,
+				    ?retryDelay: attrs.options.retryDelay,
+				    ?maxRetries: attrs.options.maxRetries,
+				    ?playDelay: attrs.options.playDelay
+				}: null;
+				new PixiHtmlVideoBase(g, null, _opts);
 			case _:
 				customUIElement(name, attrs, content);
 		}
