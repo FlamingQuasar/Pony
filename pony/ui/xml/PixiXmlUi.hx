@@ -314,7 +314,7 @@ class PixiXmlUi extends Sprite implements HasAbstract {
 				else
 					g.drawRoundedRect(0, 0, parseAndScale(_w), parseAndScale(_h), parseAndScaleInt(attrs.round));
 				g.endFill();
-				var _opts = if(attrs.options)? {
+				var _opts = (attrs.options)? {
 				    ?bufferingTreshhold: attrs.options.bufferingTreshhold,
 				    ?retryDelay: attrs.options.retryDelay,
 				    ?maxRetries: attrs.options.maxRetries,
